@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
+}
+
+model Team {
+    id           String   @id @default(cuid())
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    teamId       Int
+    providerId   Int
+    name         String
+    officialName String
+    createdTime  DateTime
+    modifiedTime DateTime
+}
+
+model Player {
+    id             String   @id @default(cuid())
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    playerId       Int
+    providerId     Int
+    firstName      String
+    lastName       String
+    dateOfBirth    Int
+    placeOfBirth   String?
+    countryOfBirth String?
+    nationality    String?
+    height         Int
+    weight         Int
+    handed         String?
+    position       String?
+    lastTeamId     Int
+    lastTeamDate   DateTime
+    createdTime    DateTime
+    modifiedTime   DateTime
+}
+
+model Shot {
+    id                     String   @id @default(cuid())
+    createdAt              DateTime @default(now())
+    updatedAt              DateTime @updatedAt
+    providerId             Int
+    gameProviderId         Int
+    playerProviderId       Int
+    teamProviderId         Int
+    opponentProviderId     Int
+    opponentTeamProviderId Int
+    type                   String
+    gametime               Int
+    originalX              Int
+    originalY              Int
+    translatedX            Int
+    translatedY            Int
+    goalX                  Int
+    goalY                  Int
+    gameId                 Int
+    playerId               Int
+    teamId                 Int
+    opponentId             Int?
+    opponentTeamId         Int
+    playerNumber           Int
+    opponentNumber         Int?
+}
