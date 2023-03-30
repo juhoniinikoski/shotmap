@@ -1,18 +1,18 @@
 import { type GetStaticProps, type NextPage } from "next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { api } from "~/utils/api";
 
 const TeamPage: NextPage<{ id: string }> = ({ id }) => {
-  const [name, setName] = useState<string>();
+  const [name, setName] = React.useState<string>();
   const { data: pairs, isLoading } = api.teams.getPlayoffPairsByTeamId.useQuery(
     {
       teamId: Number(id),
     }
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (pairs && pairs[0]) {
       if (pairs[0]?.firstTeamId === Number(id)) {
         setName(pairs[0].firstTeamName);

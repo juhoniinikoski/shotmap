@@ -25,6 +25,9 @@ const Home: NextPage = () => {
       <h1 className="text-5xl font-extrabold tracking-tight text-fliiga-yellow sm:text-[5rem]">
         Laukaisukartat
       </h1>
+      <h4 className="text-md -mt-10 font-bold tracking-tight text-fliiga-yellow sm:text-[1.2rem]">
+        F-Liiga playoffs 2023
+      </h4>
       <h3 className="text-xl font-bold tracking-tight text-fliiga-yellow sm:text-[2rem]">
         Aloita valitsemalla playoff-joukkue
       </h3>

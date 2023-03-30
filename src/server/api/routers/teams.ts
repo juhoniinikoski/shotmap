@@ -93,4 +93,17 @@ export const teamsRouter = createTRPCRouter({
       });
       return pairs;
     }),
+  getPlayoffPair: publicProcedure
+    .input(z.object({ teamId: z.number(), phase: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const pairs = await ctx.prisma.playoffPair.findFirst({
+        where: {
+          OR: [
+            { firstTeamId: input.teamId, phase: input.phase },
+            { secondTeamId: input.teamId, phase: input.phase },
+          ],
+        },
+      });
+      return pairs;
+    }),
 });
