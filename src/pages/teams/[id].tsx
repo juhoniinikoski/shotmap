@@ -39,8 +39,8 @@ const TeamPage: NextPage<{ id: string }> = ({ id }) => {
       <h1 className="text-5xl font-extrabold tracking-tight text-fliiga-yellow sm:text-[5rem]">
         {name}
       </h1>
-      <h3 className="text-xl font-bold tracking-tight text-fliiga-yellow sm:text-[2rem]">
-        Valitse vielä playoff sarja
+      <h3 className="-mt-8 text-xl font-bold tracking-tight text-fliiga-yellow sm:text-[2rem]">
+        Valitse playoff sarja
       </h3>
       {pairs.length === 1 ? (
         <div className="grid grid-cols-1 gap-4">
