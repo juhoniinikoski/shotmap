@@ -14,7 +14,7 @@ const parsePlayers = async () => {
 };
 
 export const playersRouter = createTRPCRouter({
-  initializePlayers: publicProcedure.mutation(async ({ ctx }) => {
+  insertPlayoffPlayers: publicProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.player.deleteMany({});
     const parsedPlayers = await parsePlayers();
     const players = await ctx.prisma.player.createMany({

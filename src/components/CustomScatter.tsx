@@ -14,8 +14,6 @@ const CustomScatter = (props: ScatterProps) => {
     payload: { type },
   } = props;
 
-  console.log(props);
-
   if (cx && cy && cx === +cx && cy === +cy) {
     if (type === "goal") {
       return <circle cx={cx} cy={cy} r="8" className="fill-scatter-green" />;

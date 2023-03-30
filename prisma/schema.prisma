@@ -15,19 +15,20 @@ model Team {
     id           String   @id @default(cuid())
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
-    teamId       Int
+    teamId       Int      @unique
     providerId   Int
     name         String
     officialName String
     createdTime  DateTime
     modifiedTime DateTime
+    players      Player[]
 }
 
 model Player {
     id             String   @id @default(cuid())
     createdAt      DateTime @default(now())
     updatedAt      DateTime @updatedAt
-    playerId       Int
+    playerId       Int      @unique
     providerId     Int
     firstName      String
     lastName       String
@@ -39,10 +40,13 @@ model Player {
     weight         Int
     handed         String?
     position       String?
+    lastTeam       Team     @relation(fields: [lastTeamId], references: [teamId])
     lastTeamId     Int
     lastTeamDate   DateTime
     createdTime    DateTime
     modifiedTime   DateTime
+
+    @@index([lastTeamId])
 }
 
 model Shot {
@@ -70,4 +74,51 @@ model Shot {
     opponentTeamId         Int
     playerNumber           Int
     opponentNumber         Int?
+}
+
+model Game {
+    id               String   @id @default(cuid())
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+    gameId           Int      @unique
+    subSerieId       Int
+    providerId       Int
+    season           Int
+    date             DateTime
+    startTime        String
+    endTime          String
+    clockTime        Int
+    finished         Int
+    overtime         Int
+    shootout         Int
+    homeTeamId       Int
+    awayTeamId       Int
+    homeScore        Int
+    awayScore        Int
+    playoffPair      Int?
+    playoffPhase     Int?
+    playoffPhaseName String?
+    playoffReqWins   Int?
+    spectators       Int?
+    totalPeriods     Int
+    createdTime      DateTime
+    modifiedTime     DateTime
+    statGroupId      Int
+    serieId          Int
+}
+
+model PlayoffPair {
+    id             String   @id @default(cuid())
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    pair           Int
+    phase          Int
+    phaseName      String
+    winsNeeded     Int
+    firstTeamId    Int
+    firstTeamName  String
+    firstTeamWins  Int
+    secondTeamId   Int
+    secondTeamName String
+    secondTeamWins Int
 }

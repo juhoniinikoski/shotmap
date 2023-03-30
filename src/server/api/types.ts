@@ -58,11 +58,11 @@ export type Game = {
   providerId: number;
   season: number;
   date: Date;
-  deleted: number;
+  deleted?: number;
   startTime: string;
   endTime: string;
   venueId: number;
-  rinkNumber: number;
+  rinkNumber?: number;
   clockTime: number;
   currentPeriod?: number;
   finished: number;
@@ -78,8 +78,8 @@ export type Game = {
   playoffPhase?: number;
   playoffPhaseName?: string;
   playoffReqWins?: number;
-  homeTeamTimeout: number;
-  awayTeamTimeout: number;
+  homeTeamTimeout?: number;
+  awayTeamTimeout?: number;
   spectators?: number;
   hasExtraPeriod: number;
   hasOvertime: number;
@@ -90,11 +90,11 @@ export type Game = {
   statGroupId: number;
   serieId: number;
   subSerie?: SubSerie;
-  serie: Serie;
-  periods: Period[];
-  homeTeam: Team;
-  awayTeam: Team;
-  venue: Venue;
+  serie?: Serie;
+  periods?: Period[];
+  homeTeam?: Team;
+  awayTeam?: Team;
+  venue?: Venue;
 };
 
 export type Player = {

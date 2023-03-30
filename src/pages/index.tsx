@@ -4,7 +4,21 @@ import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const { data } = api.teams.getAllTeams.useQuery();
+  const { data } = api.teams.getAllPlayoffTeams.useQuery();
+
+  // const { mutate: insertPlayoffTeams } =
+  //   api.teams.insertPlayoffTeams.useMutation();
+  // const { mutate: insertPairs } = api.teams.insertPlayoffPairs.useMutation();
+  // const { mutate: insertPlayoffGames } =
+  //   api.games.insertPlayoffGames.useMutation();
+  // const { mutate: insertPlayers } =
+  //   api.players.insertPlayoffPlayers.useMutation();
+  // const { mutate: insertAllPlayoffShots } =
+  //   api.shots.insertAllPlayoffShots.useMutation();
+
+  // const handleInsert = () => {
+  //   insertPlayoffGames();
+  // };
 
   return (
     <>
@@ -14,7 +28,7 @@ const Home: NextPage = () => {
       <h3 className="text-xl font-bold tracking-tight text-fliiga-yellow sm:text-[2rem]">
         Aloita valitsemalla playoff-joukkue
       </h3>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {data &&
           data.slice(0, 8).map((team) => (
             <Link
@@ -37,7 +51,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (typeof id !== "number") throw new Error("no id");
 
-  await ssg.teams.getAllTeams.prefetch();
+  await ssg.teams.getAllPlayoffTeams.prefetch();
 
   return {
     props: {

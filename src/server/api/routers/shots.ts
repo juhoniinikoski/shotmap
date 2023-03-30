@@ -1,6 +1,3 @@
-// /* eslint-disable @typescript-eslint/no-unsafe-return */
-// /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { type Shot, type Game } from "../types";
@@ -33,10 +30,8 @@ const getPlayoffGameIds = async (): Promise<number[]> => {
   return filtered;
 };
 
-// added latest shots at 26.3. 14.23
-
 export const shotsRouter = createTRPCRouter({
-  initializeShots: publicProcedure.mutation(async ({ ctx }) => {
+  insertAllPlayoffShots: publicProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.shot.deleteMany({});
     const gameIds = await getPlayoffGameIds();
     let shotsArray: any[] = []; // eslint-disable-line
@@ -49,6 +44,9 @@ export const shotsRouter = createTRPCRouter({
     });
     return shots;
   }),
+
+  // insertShotsByGameId
+
   getShots: publicProcedure
     .input(
       z.object({
@@ -63,6 +61,35 @@ export const shotsRouter = createTRPCRouter({
           gameId: input.gameId,
           teamId: input?.teamId,
           playerId: input?.playerId,
+        },
+      });
+      return shots;
+    }),
+
+  getPlayoffShots: publicProcedure
+    .input(
+      z.object({
+        teamId: z.number(),
+        phase: z.number(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      // get games of the phase where given team is present
+      const games = await ctx.prisma.game.findMany({
+        where: {
+          OR: [
+            { homeTeamId: input.teamId, playoffPhase: input.phase },
+            { awayTeamId: input.teamId, playoffPhase: input.phase },
+          ],
+        },
+      });
+
+      const shots = await ctx.prisma.shot.findMany({
+        where: {
+          teamId: input.teamId,
+          gameId: {
+            in: games.map((g) => g.gameId),
+          },
         },
       });
       return shots;
