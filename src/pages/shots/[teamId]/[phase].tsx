@@ -19,11 +19,23 @@ type Props = {
 };
 
 const Shots: NextPage<Props> = ({ teamId, phase }) => {
-  const { data: pair } = api.teams.getPlayoffPair.useQuery({ teamId, phase });
-  const { data: shots } = api.shots.getPlayoffShots.useQuery({
-    teamId,
-    phase,
-  });
+  const { data: pair } = api.teams.getPlayoffPair.useQuery(
+    { teamId, phase },
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  const { data: shots, isFetching } = api.shots.getPlayoffShots.useQuery(
+    {
+      teamId,
+      phase,
+    },
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const name = pair
     ? pair.firstTeamId === teamId
@@ -37,6 +49,14 @@ const Shots: NextPage<Props> = ({ teamId, phase }) => {
     : "";
 
   const year = Number(pair?.createdAt.toDateString().split(" ")[3]);
+
+  const memoScatter = React.useMemo(() => {
+    // this avoids component to animate twice if there already is cached data
+    if (isFetching) return;
+    return (
+      <Scatter data={shots} shape={(props) => <CustomScatter {...props} />} />
+    );
+  }, [shots, isFetching]);
 
   return (
     <>
@@ -76,10 +96,7 @@ const Shots: NextPage<Props> = ({ teamId, phase }) => {
                     type="number"
                     domain={[-250, 250]}
                   />
-                  <Scatter
-                    data={shots}
-                    shape={(props) => <CustomScatter {...props} />}
-                  />
+                  {memoScatter}
                 </ScatterChart>
               </ResponsiveContainer>
             </div>

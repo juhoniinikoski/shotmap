@@ -16,11 +16,32 @@ const CustomScatter = (props: ScatterProps) => {
 
   if (cx && cy && cx === +cx && cy === +cy) {
     if (type === "goal") {
-      return <circle cx={cx} cy={cy} r="8" className="fill-scatter-green" />;
+      return (
+        <circle
+          cx={cx}
+          cy={cy}
+          r="8"
+          className="animate-fade-in-scatters fill-scatter-green"
+        />
+      );
     } else if (type === "saved") {
-      return <circle cx={cx} cy={cy} r="8" className="fill-scatter-yellow" />;
+      return (
+        <circle
+          cx={cx}
+          cy={cy}
+          r="8"
+          className="animate-fade-in-scatters fill-scatter-yellow"
+        />
+      );
     }
-    return <circle cx={cx} cy={cy} r="8" className="fill-scatter-red" />;
+    return (
+      <circle
+        cx={cx}
+        cy={cy}
+        r="8"
+        className="animate-fade-in-scatters fill-scatter-red"
+      />
+    );
   }
   return null;
 };
