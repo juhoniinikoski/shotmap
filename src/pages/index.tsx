@@ -36,7 +36,7 @@ const Home: NextPage = () => {
           data.slice(0, 8).map((team) => (
             <Link
               href={`teams/${team.teamId}`}
-              className="flex items-center justify-center rounded border border-fliiga-yellow bg-transparent py-2 px-6 font-semibold text-white hover:border-transparent hover:bg-fliiga-yellow hover:text-white"
+              className="flex items-center justify-center rounded border border-fliiga-yellow bg-transparent py-2 px-6 font-medium text-white hover:border-transparent hover:bg-fliiga-yellow hover:text-white"
               key={team.id}
             >
               {team.name}

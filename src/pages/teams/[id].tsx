@@ -47,7 +47,7 @@ const TeamPage: NextPage<{ id: string }> = ({ id }) => {
           {pairs.map((pair) => (
             <Link
               href={`/shots/${id}/${pair.phase}`}
-              className="flex items-center justify-center rounded border border-fliiga-yellow bg-transparent py-2 px-6 font-semibold text-white hover:border-transparent hover:bg-fliiga-yellow hover:text-white"
+              className="flex items-center justify-center rounded border border-fliiga-yellow bg-transparent py-2 px-6 font-medium text-white hover:border-transparent hover:bg-fliiga-yellow hover:text-white"
               key={pair.id}
             >
               {pair.firstTeamName} - {pair.secondTeamName}
