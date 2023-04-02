@@ -1,8 +1,8 @@
+import { type Prisma } from "@prisma/client";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { type Player } from "../types";
 
 type StatResult = {
-  player: Player;
+  player: Prisma.PlayerCreateManyInput;
 };
 
 const parsePlayers = async () => {

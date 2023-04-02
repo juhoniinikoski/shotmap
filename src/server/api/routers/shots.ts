@@ -1,32 +1,51 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { type Shot, type Game } from "../types";
+import { type Prisma } from "@prisma/client";
 
-const delay = (time: number) => {
-  return new Promise((resolve) => setTimeout(resolve, time));
-};
+// const delay = (time: number) => {
+//   return new Promise((resolve) => setTimeout(resolve, time));
+// };
 
-const getShots = async (gameId: number) => {
-  await delay(2000);
+const getShots = async (
+  gameId: number
+): Promise<Prisma.ShotCreateManyInput[]> => {
+  // await delay(2000);
   const res = await fetch(`https://api.salibandy.fi/shots/${gameId}`);
-  const shots = (await res.json()) as Shot[];
-  for (const s of shots) {
-    delete s.opponent;
-    delete s.opponentTeam;
-    delete s.team;
-    delete s.player;
-  }
-  return shots;
+  const shots = (await res.json()) as Prisma.ShotCreateInput[];
+
+  return shots.map((s) => ({
+    providerId: s.providerId,
+    gameProviderId: s.gameProviderId,
+    playerProviderId: s.playerProviderId,
+    teamProviderId: s.teamProviderId,
+    opponentProviderId: s.opponentProviderId,
+    opponentTeamProviderId: s.opponentTeamProviderId,
+    type: s.type,
+    gametime: s.gametime,
+    originalX: s.originalX,
+    originalY: s.originalY,
+    translatedX: s.translatedX,
+    translatedY: s.translatedY,
+    goalX: s.goalX,
+    goalY: s.goalY,
+    gameId: s.gameId,
+    playerId: s.playerId,
+    teamId: s.teamId,
+    opponentId: s.opponentId,
+    opponentTeamId: s.opponentTeamId,
+    opponentNumber: s.opponentNumber,
+    playerNumber: s.playerNumber,
+  }));
 };
 
 const getPlayoffGameIds = async (): Promise<number[]> => {
   const res = await fetch(
     "https://api.salibandy.fi/games?statGroupId=7001&season=2023"
   );
-  const games = (await res.json()) as Game[];
-  const filtered: number[] = games //eslint-disable-line
-    .filter((g: any) => g.finished !== 0) // eslint-disable-line
-    .map((g: any) => g.gameId); // eslint-disable-line
+  const games = (await res.json()) as Prisma.GameCreateManyInput[];
+  const filtered: number[] = games
+    .filter((g) => g.finished !== 0)
+    .map((g) => g.gameId);
   return filtered;
 };
 
@@ -34,7 +53,7 @@ export const shotsRouter = createTRPCRouter({
   insertAllPlayoffShots: publicProcedure.mutation(async ({ ctx }) => {
     await ctx.prisma.shot.deleteMany({});
     const gameIds = await getPlayoffGameIds();
-    let shotsArray: any[] = []; // eslint-disable-line
+    let shotsArray: Prisma.ShotCreateManyInput[] = [];
     for await (const id of gameIds) {
       const newShots = await getShots(id);
       shotsArray = shotsArray.concat([...newShots]);
@@ -45,7 +64,15 @@ export const shotsRouter = createTRPCRouter({
     return shots;
   }),
 
-  // insertShotsByGameId
+  insertShotsByGameId: publicProcedure
+    .input(z.object({ gameId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const newShots = await getShots(input.gameId);
+      const shots = await ctx.prisma.shot.createMany({
+        data: newShots,
+      });
+      return shots;
+    }),
 
   getShots: publicProcedure
     .input(

@@ -1,7 +1,7 @@
+import { type Prisma } from "@prisma/client";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { type Game } from "../types";
 
-const parseGames = (games: Game[]) => {
+const parseGames = (games: Prisma.GameCreateManyInput[]) => {
   return games.map((g) => ({
     gameId: g.gameId,
     subSerieId: g.subSerieId,
@@ -37,7 +37,7 @@ export const gamesRouter = createTRPCRouter({
     const res = await fetch(
       "https://api.fliiga.com/games?statGroupId=7001&season=2023"
     );
-    const gameObjects = (await res.json()) as Game[];
+    const gameObjects = (await res.json()) as Prisma.GameCreateManyInput[];
     const games = await ctx.prisma.game.createMany({
       data: parseGames(gameObjects),
     });

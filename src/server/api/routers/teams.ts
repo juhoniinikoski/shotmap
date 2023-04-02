@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { type Game, type Team } from "../types";
+import { type Prisma } from "@prisma/client";
 
 type PairObject = {
   pair: number;
@@ -9,14 +9,14 @@ type PairObject = {
   phaseName: string;
   winsNeeded: number;
   firstSeedTeam: {
-    details: Team;
+    details: Prisma.TeamCreateInput;
     wins: number;
   };
   secondSeedTeam: {
-    details: Team;
+    details: Prisma.TeamCreateInput;
     wins: number;
   };
-  games: Game[];
+  games: Prisma.GameCreateInput[];
 };
 
 type PairResponseType = {
@@ -24,7 +24,7 @@ type PairResponseType = {
 };
 
 type Standing = {
-  team: Team;
+  team: Prisma.TeamCreateManyInput;
 };
 
 export const teamsRouter = createTRPCRouter({
