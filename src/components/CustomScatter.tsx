@@ -33,6 +33,15 @@ const CustomScatter = (props: ScatterProps) => {
           className="animate-fade-in-scatters fill-scatter-yellow"
         />
       );
+    } else if (type === "blocked") {
+      return (
+        <circle
+          cx={cx}
+          cy={cy}
+          r="8"
+          className="animate-fade-in-scatters fill-scatter-orange"
+        />
+      );
     }
     return (
       <circle

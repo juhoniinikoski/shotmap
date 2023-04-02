@@ -103,6 +103,25 @@ const Shots: NextPage<Props> = ({ teamId, phase }) => {
           </div>
         </>
       </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded-full bg-scatter-green"></div>
+          <p className="text-white">Maali</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded-full bg-scatter-yellow"></div>
+          <p className="text-white">Torjuttu</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded-full bg-scatter-orange"></div>
+          <p className="text-white">Peitetty</p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded-full bg-scatter-red"></div>
+          <p className="text-white">Ohilaukaus</p>
+        </div>
+      </div>
     </>
   );
 };

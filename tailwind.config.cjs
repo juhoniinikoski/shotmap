@@ -5,6 +5,10 @@ const config = {
     extend: {
       colors: {
         "fliiga-yellow": "#C8B437",
+        "scatter-green": "#6BD2A7",
+        "scatter-yellow": "#F8FA98",
+        "scatter-orange": "#E4B18B",
+        "scatter-red": "#C36363",
       },
       backgroundColor: {
         "fliiga-yellow": "#C8B437",
@@ -15,7 +19,8 @@ const config = {
       fill: {
         "scatter-green": "#6BD2A7",
         "scatter-yellow": "#F8FA98",
-        "scatter-red": "#FAA198",
+        "scatter-orange": "#E4B18B",
+        "scatter-red": "#C36363",
       },
       animation: {
         "fade-in-scatters": "fade-up-in 0.5s",
