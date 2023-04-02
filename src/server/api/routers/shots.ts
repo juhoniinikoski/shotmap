@@ -11,7 +11,7 @@ const getShots = async (
 ): Promise<Prisma.ShotCreateManyInput[]> => {
   // await delay(2000);
   const res = await fetch(`https://api.salibandy.fi/shots/${gameId}`);
-  const shots = (await res.json()) as Prisma.ShotCreateInput[];
+  const shots = (await res.json()) as Prisma.ShotCreateManyInput[];
 
   return shots.map((s) => ({
     providerId: s.providerId,
@@ -67,6 +67,7 @@ export const shotsRouter = createTRPCRouter({
   insertShotsByGameId: publicProcedure
     .input(z.object({ gameId: z.number() }))
     .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.shot.deleteMany({ where: { gameId: input.gameId } });
       const newShots = await getShots(input.gameId);
       const shots = await ctx.prisma.shot.createMany({
         data: newShots,

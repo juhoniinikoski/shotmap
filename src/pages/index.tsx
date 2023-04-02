@@ -19,7 +19,15 @@ const Home: NextPage = () => {
   //   api.shots.insertShotsByGameId.useMutation();
 
   // const handleInsert = () => {
-  //   insertShotsByGameId({ gameId: 305554 });
+  //   insertShotsByGameId({ gameId: 305556 });
+  // };
+
+  // const handleGamesUpdate = () => {
+  //   insertPlayoffGames();
+  // };
+
+  // const handlePlayersUpdate = () => {
+  //   insertPlayers();
   // };
 
   return (
