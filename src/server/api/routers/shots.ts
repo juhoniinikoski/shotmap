@@ -2,14 +2,15 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { type Prisma } from "@prisma/client";
 
-// const delay = (time: number) => {
-//   return new Promise((resolve) => setTimeout(resolve, time));
-// };
+const delay = (time: number) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+};
 
 const getShots = async (
   gameId: number
 ): Promise<Prisma.ShotCreateManyInput[]> => {
-  // await delay(2000);
+  // this delay is to avoid overloading remote server
+  await delay(2000);
   const res = await fetch(`https://api.salibandy.fi/shots/${gameId}`);
   const shots = (await res.json()) as Prisma.ShotCreateManyInput[];
 
@@ -90,6 +91,9 @@ export const shotsRouter = createTRPCRouter({
           teamId: input?.teamId,
           playerId: input?.playerId,
         },
+        include: {
+          player: true,
+        },
       });
       return shots;
     }),
@@ -118,6 +122,9 @@ export const shotsRouter = createTRPCRouter({
           gameId: {
             in: games.map((g) => g.gameId),
           },
+        },
+        include: {
+          player: true,
         },
       });
       return shots;

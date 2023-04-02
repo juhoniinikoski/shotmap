@@ -22,6 +22,8 @@ model Team {
     createdTime  DateTime
     modifiedTime DateTime
     players      Player[]
+    homeGames    Game[]   @relation("HomeTeam")
+    awayGames    Game[]   @relation("AwayTeam")
 }
 
 model Player {
@@ -40,11 +42,13 @@ model Player {
     weight         Int
     handed         String?
     position       String?
-    lastTeam       Team     @relation(fields: [lastTeamId], references: [teamId])
+    lastTeam       Team     @relation(fields: [lastTeamId], references: [teamId], onDelete: NoAction)
     lastTeamId     Int
     lastTeamDate   DateTime
     createdTime    DateTime
     modifiedTime   DateTime
+    shots          Shot[]   @relation("ShootingPlayer")
+    blokedShots    Shot[]   @relation("OpponentPlayer")
 
     @@index([lastTeamId])
 }
@@ -69,13 +73,16 @@ model Shot {
     goalY                  Int
     gameId                 Int
     playerId               Int
+    player                 Player?  @relation("ShootingPlayer", fields: [playerId], references: [playerId], onDelete: NoAction)
     teamId                 Int
     opponentId             Int?
+    opponent               Player?  @relation("OpponentPlayer", fields: [opponentId], references: [playerId], onDelete: NoAction)
     opponentTeamId         Int
     playerNumber           Int
     opponentNumber         Int?
 
     @@index([playerId])
+    @@index([opponentId])
 }
 
 model Game {
@@ -94,7 +101,9 @@ model Game {
     overtime         Int
     shootout         Int
     homeTeamId       Int
+    homeTeam         Team     @relation("HomeTeam", fields: [homeTeamId], references: [teamId], onDelete: NoAction)
     awayTeamId       Int
+    awayTeam         Team     @relation("AwayTeam", fields: [awayTeamId], references: [teamId], onDelete: NoAction)
     homeScore        Int
     awayScore        Int
     playoffPair      Int?
@@ -107,6 +116,9 @@ model Game {
     modifiedTime     DateTime
     statGroupId      Int
     serieId          Int
+
+    @@index([homeTeamId])
+    @@index([awayTeamId])
 }
 
 model PlayoffPair {

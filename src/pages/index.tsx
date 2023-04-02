@@ -19,15 +19,7 @@ const Home: NextPage = () => {
   //   api.shots.insertShotsByGameId.useMutation();
 
   // const handleInsert = () => {
-  //   insertShotsByGameId({ gameId: 305556 });
-  // };
-
-  // const handleGamesUpdate = () => {
-  //   insertPlayoffGames();
-  // };
-
-  // const handlePlayersUpdate = () => {
-  //   insertPlayers();
+  //   insertAllPlayoffShots();
   // };
 
   return (
@@ -53,6 +45,9 @@ const Home: NextPage = () => {
             </Link>
           ))}
       </div>
+      {/* <button className="text-white" onClick={handleInsert}>
+        Click here to insert all playoffs shots
+      </button> */}
     </>
   );
 };
