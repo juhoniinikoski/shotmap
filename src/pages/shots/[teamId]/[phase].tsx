@@ -60,7 +60,7 @@ const Shots: NextPage<Props> = ({ teamId, phase }) => {
 
   return (
     <>
-      <h2 className="text-5xl font-extrabold text-fliiga-yellow">{name}</h2>
+      <h1 className="text-5xl font-extrabold text-fliiga-yellow">{name}</h1>
       <div className="-mt-10 flex gap-1">
         <p className="text-md text-fliiga-yellow">{year - 1} -</p>
         <p className="text-md text-fliiga-yellow">{year}</p>

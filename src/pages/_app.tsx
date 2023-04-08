@@ -10,8 +10,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Shotmap</title>
-        <meta name="description" content="Fliiga shot map" />
+        <title>F-liiga laukaisukartat playoffs 2023</title>
+        <meta name="description" content="F-Liiga laukaisukartta" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <nav className="flex h-12 w-full items-center justify-center bg-black pl-6 pr-6">
