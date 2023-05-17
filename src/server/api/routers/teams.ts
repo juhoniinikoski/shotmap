@@ -29,7 +29,7 @@ type Standing = {
 
 export const teamsRouter = createTRPCRouter({
   insertPlayoffTeams: publicProcedure.mutation(async ({ ctx }) => {
-    await ctx.prisma.team.deleteMany({});
+    // await ctx.prisma.team.deleteMany({});
     const res = await fetch("https://api.fliiga.com/standings/7000/2023");
     const standings = (await res.json()) as Standing[];
     const teams = await ctx.prisma.team.createMany({
@@ -53,7 +53,7 @@ export const teamsRouter = createTRPCRouter({
     }),
 
   insertPlayoffPairs: publicProcedure.mutation(async ({ ctx }) => {
-    await ctx.prisma.playoffPair.deleteMany({});
+    // await ctx.prisma.playoffPair.deleteMany({});
     const res = await fetch(
       "https://api.fliiga.com/games/playoffs?statGroupId=7001&season=2023"
     );

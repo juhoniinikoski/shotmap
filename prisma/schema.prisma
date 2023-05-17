@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider     = "mysql"
+    provider     = "postgres"
     url          = env("DATABASE_URL")
     relationMode = "prisma"
 }
@@ -42,7 +42,7 @@ model Player {
     weight         Int
     handed         String?
     position       String?
-    lastTeam       Team     @relation(fields: [lastTeamId], references: [teamId], onDelete: NoAction)
+    lastTeam       Team     @relation(fields: [lastTeamId], references: [teamId])
     lastTeamId     Int
     lastTeamDate   DateTime
     createdTime    DateTime
@@ -73,10 +73,10 @@ model Shot {
     goalY                  Int
     gameId                 Int
     playerId               Int
-    player                 Player?  @relation("ShootingPlayer", fields: [playerId], references: [playerId], onDelete: NoAction)
+    player                 Player?  @relation("ShootingPlayer", fields: [playerId], references: [playerId])
     teamId                 Int
     opponentId             Int?
-    opponent               Player?  @relation("OpponentPlayer", fields: [opponentId], references: [playerId], onDelete: NoAction)
+    opponent               Player?  @relation("OpponentPlayer", fields: [opponentId], references: [playerId])
     opponentTeamId         Int
     playerNumber           Int
     opponentNumber         Int?
@@ -101,9 +101,9 @@ model Game {
     overtime         Int
     shootout         Int
     homeTeamId       Int
-    homeTeam         Team     @relation("HomeTeam", fields: [homeTeamId], references: [teamId], onDelete: NoAction)
+    homeTeam         Team     @relation("HomeTeam", fields: [homeTeamId], references: [teamId])
     awayTeamId       Int
-    awayTeam         Team     @relation("AwayTeam", fields: [awayTeamId], references: [teamId], onDelete: NoAction)
+    awayTeam         Team     @relation("AwayTeam", fields: [awayTeamId], references: [teamId])
     homeScore        Int
     awayScore        Int
     playoffPair      Int?

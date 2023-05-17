@@ -46,7 +46,7 @@ const Home: NextPage = () => {
           ))}
       </div>
       {/* <button className="text-white" onClick={handleInsert}>
-        Click here to insert all playoffs shots
+        Click here to insert all playoff shots
       </button> */}
     </>
   );
